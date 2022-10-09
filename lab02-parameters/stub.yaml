@@ -2,10 +2,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: EC2 instance with parameters
 Parameters:
-  # TODO add parameters
-  # AMI: String
-  # InstanceType: String
-  # Subnet: Subnet-ID (AWS resource type) 
+  AMI: 
+    Type: String
+    MaxLength: 21
+    MinLength: 12
+    Description : AMI to start virtual server
+  InstanceType: 
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+    Description : Enter t2.micro, m1.small, or m1.large. Default is t2.micro.
+  Subnet:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet-ID (AWS resource type) 
 Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
