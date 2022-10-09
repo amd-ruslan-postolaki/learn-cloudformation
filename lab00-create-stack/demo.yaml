@@ -58,7 +58,7 @@ Resources:
           #!/bin/bash -x
           yum install -y httpd
           cd /var/www/html
-          echo "<html><body>Hello World!</body></html>" > index.html
+          echo "<html><body>Hello World--PR!</body></html>" > index.html
           service httpd start
   WebserverSecurityGroup:
     Type: AWS::EC2::SecurityGroup
