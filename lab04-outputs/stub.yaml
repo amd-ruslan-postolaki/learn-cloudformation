@@ -3,10 +3,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: EC2 instance with functions
 Parameters:
   AMI:
-    Description: AMI to start virtual server
+    Description: AMI to start virtual server(default value is for us-east-1)
     Type: String
     MaxLength: 12
     MinLength: 12
+    Default: ami-60b6c60a
   InstanceType:
     Description: instance type of virtual server
     Type: String
@@ -37,5 +38,14 @@ Resources:
           yum install -y httpd-tools
           ab -n 1000 -c 4 ${URL}
 Outputs:
-  # TODO
-	# add ID of virtual server and public/private IP address to outputs
+  VirualServerId:
+    Description: Show ID for current virual server
+    Value: !Ref EC2Instance
+  PublicIP:
+    Value:  !GetAtt EC2Instance.PublicIp
+  PublicDomain:
+    Value:  !Sub ${EC2Instance.PublicDnsName}
+  PrivateIP:
+    Value:  !GetAtt EC2Instance.PrivateIp
+  PrivateDomain:
+    Value:  !Sub ${EC2Instance.PrivateDnsName}

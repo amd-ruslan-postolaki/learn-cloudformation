@@ -1,9 +1,14 @@
 ---
-AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: '2010-09-09'
 Description: 
   S3bucket from CF PR20221009-v1 
 Resources: 
   MyS3Bucket:
     Type: AWS::S3::Bucket
     Properties:    
-      BucketName: learn-cloudformation-awittig
+      BucketName: !Join ['-', ['learn-cloudformation-pro-test',!Ref 'AWS::StackName'] ]
+Outputs:
+  AccountId:
+    Value: !Ref 'AWS::AccountId'
+  NotificationARN:
+    Value: !Select [0, !Ref 'AWS::NotificationARNs']
