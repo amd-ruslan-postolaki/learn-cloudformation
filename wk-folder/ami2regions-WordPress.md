@@ -12,3 +12,6 @@
 |sa-east-1      | AMI | ami-6817af04 |
 |us-west-1      | AMI | ami-d5ea86b5 |
 |us-west-2      | AMI | ami-f0091d91 |
+
+
+ami-bff32ccc
