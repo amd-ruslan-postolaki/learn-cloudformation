@@ -16,9 +16,31 @@ Parameters:
     Type: String
     Default: http://widdix.net/
 Resources:
-  # add stacks
-	# https://s3-eu-west-1.amazonaws.com/learn-cloudformation/lab07-nested-stacks/ec2-stack.json
-	# https://s3-eu-west-1.amazonaws.com/learn-cloudformation/lab07-nested-stacks/s3-stack.json
+  myStackWithEC2:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      Parameters:
+        KeyName: !Ref KeyName
+        VPC: !Ref VPC
+        Subnet: !Ref Subnet
+        URL: !Ref URL
+      TemplateURL: https://s3-eu-west-1.amazonaws.com/learn-cloudformation/lab07-nested-stacks/ec2-stack.json
+      TimeoutInMinutes: 5
+  myStackWithS3:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      Parameters:        
+        InstanceId: !GetAtt myStackWithEC2.Outputs.InstanceId
+      TemplateURL:  https://s3-eu-west-1.amazonaws.com/learn-cloudformation/lab07-nested-stacks/s3-stack.json
+      TimeoutInMinutes: 3
 Outputs:
-  # TODO add outputs
-	# from stack lab6-mappings (instance id and public IP address)
+  EC2OutInfo:
+    Description: InstanceId for created EC2 instnce
+    Value: !GetAtt myStackWithEC2.Outputs.InstanceId
+  PublicIP:
+    Description: Public IP for created EC instance  
+    Value:  !GetAtt myStackWithEC2.Outputs.PublicIPAddress
+
+
+
+
