@@ -37,11 +37,16 @@ Resources:
       AWS::CloudFormation::Init:
         config:
           packages:
-            # TODO install httpd with yum
+            yum:
+              httpd[]
           files:
-            # TODO create /var/www/html/index.html containing "<html><body>Hello World!</body></html>"
+            /var/www/html/index.html:
+              content: "<html><body>Hello World!</body></html>"
           services:
-            # TODO start httpd with sysvinit
+            sysvinit:
+              httpd:
+                enabled: 'true'
+                ensureRunning: 'true'
     Properties:
       ImageId: !FindInMap [RegionMap, !Ref 'AWS::Region', AMI]
       InstanceType: t2.micro
