@@ -13,8 +13,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: lab11
-      VpcId:
-        Ref: VPC
+      VpcId: !Ref VPC
       SecurityGroupIngress:
       - CidrIp: 0.0.0.0/0
         FromPort: 80
@@ -24,12 +23,15 @@ Outputs:
   VPC:
     Value: !Ref VPC
     Description: ID of VPC
-    # TODO export VPC id. Add the stack's name as a prefix to avoid naming clashes
+    Export:
+      Name: !Sub ${AWS::StackName}-VPC
   Subnet:
     Value: !Ref Subnet
     Description: ID of subnet
-    # TODO export subnet id. Add the stack's name as a prefix to avoid naming clashes
+    Export: 
+      Name: !Sub ${AWS::StackName}-IdSubnet
   SecurityGroup:
     Value: !Ref SecurityGroup
     Description: ID of security group
-    # TODO export security group id. Add the stack's name as a prefix to avoid naming clashes
+    Export: 
+      Name: !Sub  ${AWS::StackName}-sg

@@ -2,8 +2,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Hello World! example
 Parameters:
-  # TODO you exported the values prefixed with the name of the exporting stack.
-  # Use a parameter to pass the stack name to this template.
+  ExportedStackName:
+    Type: String
+    Description: Exported Stack Name
 Mappings:
   RegionMap:
     eu-west-1:
@@ -36,8 +37,9 @@ Resources:
       - AssociatePublicIpAddress: 'true'
         DeviceIndex: '0'
         GroupSet: 
-        - # TODO import exported security group id
-        SubnetId: # TODO import exported subnet id
+        - Fn::ImportValue: !Sub '${ExportedStackName}-sg'
+        SubnetId: 
+          Fn::ImportValue: !Sub '${ExportedStackName}-IdSubnet'
       Tags:
       - Key: Name
         Value: hello-world
